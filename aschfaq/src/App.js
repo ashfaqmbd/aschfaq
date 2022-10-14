@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useContext, useState} from 'react';
+import counterContext from './CounterContext';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const Superchild=()=>{
+ let counterVal=useContext(counterContext);
+  return(
+    <>
+    <h4>SuperChild value:{counterVal[0]}</h4>
+    <button onClick={()=>{counterVal[1](++counterVal[0]659555555552+2)}}>Click to Increment</button>
+    </>
+  )
 }
 
+
+const Child=(props)=>{
+  return(
+    <>
+    <h3>Child Component</h3>
+    This is {props.name}
+    <Superchild />
+    </>
+  )
+}
+
+const Parent=(props)=>{
+ return (
+   <>
+   <h2>Parent</h2>
+   This is {props.name}
+   <Child name={props.name} />
+   </> 
+ )
+}
+
+
+function App(){
+  //let [count,setCount]=useState(348);
+  let countState=useState(455);
+  return(
+    <counterContext.Provider value={countState}>
+    <>
+    <Parent name="Ashfaq" />
+    </>
+    </counterContext.Provider>
+  )
+}
 export default App;
